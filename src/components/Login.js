@@ -2,8 +2,16 @@ import { useRef, useState } from "react";
 import { BG_URL } from "../utils/constants";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
+import { auth } from "../utils/firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errMsg, setErrMsg] = useState(null);
 
@@ -13,14 +21,48 @@ const Login = () => {
 
     const handleButtonClick = () => {
         setErrMsg(null);
-        // Validate form data
-
         // email.current.value and password.current.value will get the values from refs
 
+        /* Validate form data */
         const message = checkValidData(email?.current?.value, password?.current?.value, name?.current?.value);
+        if(message !== null) {
+            /* Form not valid, show error to the user */
+            setErrMsg(message);
+            return;
+        }
 
-        if(message) 
-            setErrMsg(message)
+        let authApi;
+        if(!isSignInForm) {
+            /* Sign Up logic */
+            authApi = createUserWithEmailAndPassword(auth, email?.current?.value, password?.current?.value)
+        } else {
+            /* Sign In logic */
+            authApi = signInWithEmailAndPassword(auth, email?.current?.value, password?.current?.value)
+        }
+
+        authApi.then((userCredential) => {
+            const user = userCredential.user;
+
+            updateProfile(user, {
+                displayName: name?.current.value, photoURL: 'https://avatars.githubusercontent.com/u/186174536?v=4'
+            }).then(() => {
+                // Profile updated!
+                const {uid, email, displayName, photoURL} = auth.currentUser;
+                dispatch(addUser({uid: uid, email: email, displayName: displayName, photoURL: photoURL}));
+                navigate('/browse');
+            }).catch((error) => {
+                // An error occurred
+                setErrMsg(error.message);
+            });
+
+            
+            
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setErrMsg(errorCode + ' : ' + errorMessage);
+        });
     }
 
     const toggleSignInForm = () => {
