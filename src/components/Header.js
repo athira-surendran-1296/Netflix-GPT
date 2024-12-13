@@ -1,4 +1,4 @@
-import { DEFAULT_USER_LOGO, LOGO } from "../utils/constants";
+import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
@@ -6,11 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { addUser, removeUser } from "../utils/store/slices/userSlice";
+import { toggleGptSearchView } from "../utils/store/slices/gptSlice";
+import { setLanguage } from "../utils/store/slices/appConfigSlice";
 
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((store) => store.user);
+    const showGptSearch = useSelector(store => store.gpt.showGptSearch);
 
     useEffect(() => {
         /** This API is provided by firebase and it acts like a event listener,
@@ -44,7 +47,6 @@ const Header = () => {
         }
     }, []);
 
-
     const handleSignout = () => {
         signOut(auth).then(() => {
             /* Sign-out successful */
@@ -55,16 +57,34 @@ const Header = () => {
         });
     };
 
+    const handleGptSearchClick = () => {
+        // Toggle GPT Search
+        dispatch(toggleGptSearchView());
+    };
+
+    const handleLanguageChange = (e) => {
+        dispatch(setLanguage(e.target.value));
+    };
+
     return(
         <div className="w-full absolute px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
             <div>
                 <img className="w-44" src={LOGO} alt="logo" />
             </div>
-            {user && <div className="flex gap-2 p-3">
-                <img className="w-12 rounded-md" src={user?.photoURL} alt="logo" />
-                <button className="border border-white bg-black text-white p-1 px-4 m-2 rounded-md" onClick={handleSignout}>
-                    Sign Out
+            {user && <div className="flex justify-between w-full">
+                <button className="border border-white bg-black text-white p-1 px-4 m-2 my-4 rounded-md" onClick={handleGptSearchClick}>
+                    { showGptSearch ? 'Home' : 'GPT Search' }
                 </button>
+                <div className="flex gap-2 p-3">
+                    {showGptSearch && <select className="bg-black text-white  p-1 m-2 rounded-md" onChange={handleLanguageChange}>
+                        {SUPPORTED_LANGUAGES.map(language => 
+                            <option key={language.id} value={language.id}>{language.name}</option>)}
+                    </select>}
+                    <img className="w-12 rounded-md" src={user?.photoURL} alt="logo" />
+                    <button className="border border-white bg-black text-white p-1 px-4 m-2 rounded-md" onClick={handleSignout}>
+                        Sign Out
+                    </button>
+                </div>
             </div>}
         </div>
     )
