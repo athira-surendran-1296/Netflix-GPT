@@ -1,3 +1,5 @@
+import { ACCESS_TOKEN } from './secretKeys';
+
 export const BG_URL =
   "https://assets.nflxext.com/ffe/siteui/vlv3/fc164b4b-f085-44ee-bb7f-ec7df8539eff/d23a1608-7d90-4da1-93d6-bae2fe60a69b/IN-en-20230814-popsignuptwoweeks-perspective_alpha_website_large.jpg";
 
@@ -7,7 +9,6 @@ export const LOGO =
 export const DEFAULT_USER_AVTAR =
   "https://wallpapers.com/images/high/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.webp";
 
-const ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZmEzZWViM2IzN2NhOWVmZTQ5MzE3MmI2YWI3NWFiZiIsIm5iZiI6MTczMzk4MjQ4OS40MjUsInN1YiI6IjY3NWE3OTE5OGExMmFjODAyZThhM2QxZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.keMnah71rejm48nRCX3oUXHZFsL6EdtMeTKAOuNH3jE';
 
 export const API_OPTIONS = {
   method: 'GET', 
@@ -18,6 +19,8 @@ export const API_OPTIONS = {
 };
 
 export const IMAGE_CDN_URL = 'https://image.tmdb.org/t/p/w500';
+
+export const GPT_QUERY = 'Act as a movie recommendation system and suggest 5 movies for the query that follow. Let the response be in the format - Don, Sholay, Kio Mil Gaya, Zindagi Na Milegi Dobara, Golmal.Query - '
 
 // LANGUAGE SUPPORT
 export const SUPPORTED_LANGUAGES = [
@@ -35,3 +38,4 @@ export const TOP_RATED_MOVIES_API = 'https://api.themoviedb.org/3/tv/top_rated?p
 export const getMovieVideoApi = (id) => {
   return 'https://api.themoviedb.org/3/movie/' + id + '/videos';
 }
+export const getSearchMovieApi = (movie) => "https://api.themoviedb.org/3/search/movie?query=" + movie + "&include_adult=false&page=1";
