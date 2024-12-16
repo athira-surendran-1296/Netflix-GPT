@@ -1,5 +1,3 @@
-import { ACCESS_TOKEN } from './secretKeys';
-
 export const BG_URL =
   "https://assets.nflxext.com/ffe/siteui/vlv3/fc164b4b-f085-44ee-bb7f-ec7df8539eff/d23a1608-7d90-4da1-93d6-bae2fe60a69b/IN-en-20230814-popsignuptwoweeks-perspective_alpha_website_large.jpg";
 
@@ -13,7 +11,7 @@ export const DEFAULT_USER_AVTAR =
 export const API_OPTIONS = {
   method: 'GET', 
   headers: {
-    Authorization: 'Bearer ' + ACCESS_TOKEN,
+    Authorization: 'Bearer ' + process.env.REACT_APP_ACCESS_TOKEN,
     accept: 'application/json'
   }
 };
