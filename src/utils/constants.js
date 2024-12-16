@@ -27,7 +27,7 @@ export const SUPPORTED_LANGUAGES = [
 ];
 
 // ICONS
-export const PLAY = 'https://www.iconsdb.com/icons/preview/black/play-xxl.png';
+export const PLAY = 'https://icons.veryicon.com/png/o/internet--web/web-video-clip/play-332.png';
 
 // APIs
 export const NOW_PLAYING_MOVIES_API = 'https://api.themoviedb.org/3/movie/now_playing?page=1';
