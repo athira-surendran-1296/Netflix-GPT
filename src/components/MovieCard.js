@@ -7,7 +7,7 @@ const MovieCard = ({title, poster_path}) => {
     <div className='flex-shrink-0 flex-grow-0 basis-auto'>
       {/* <div>{title}</div> */}
       <div>
-        <img className='w-40' alt={title} src={IMAGE_CDN_URL + poster_path} />
+        <img className='w-24 md:w-40' alt={title} src={IMAGE_CDN_URL + poster_path} />
       </div>
     </div>
   )

@@ -73,14 +73,14 @@ const Login = () => {
                 <img className="w-screen h-screen object-cover" src={BG_URL} alt='Logo' />
             </div>
             <form onSubmit={ (e) => e.preventDefault() } 
-                className="absolute mt-20 p-7 flex flex-col bg-black w-11/12 md:w-8/12 lg:w-3/12 mx-auto right-0 left-0 text-white bg-opacity-80">
+                className="absolute mt-16 md:mt-20 p-2 md:p-5 flex flex-col bg-black w-12/12 md:w-8/12 lg:w-3/12 mx-auto right-0 left-0 text-white bg-opacity-80">
                 <h1 className="mb-5 font-bold text-3xl">
                     { isSignInForm ? 'Sign In' : 'Welcome!'}
                 </h1>
                 {!isSignInForm && <input ref={name}
                     type='text' 
                     placeholder="Full Name" 
-                    className="mb-7 p-2 w-full bg-gray-700 rounded-md" />}
+                    className="mb-4 md:mb-7 p-2 w-full bg-gray-700 rounded-md" />}
                 <input ref={email}
                     type='text' 
                     placeholder="Email Address" 
@@ -90,7 +90,7 @@ const Login = () => {
                     placeholder="Password" 
                     className="mb-7 p-2 w-full bg-gray-700 rounded-md" />
                 <p className="mt-[-14px] mb-4 text-red-600 text-xs">{errMsg}</p>
-                <button className="mb-7 p-3 bg-red-600 w-full rounded-md" onClick={handleButtonClick}>
+                <button className="mb-2 md:mb-5 p-3 bg-red-600 w-full rounded-md" onClick={handleButtonClick}>
                     { isSignInForm ? 'Sign In' : 'Sign Up' }
                 </button>
                 <p onClick={toggleSignInForm} className="text-sm cursor-pointer">
